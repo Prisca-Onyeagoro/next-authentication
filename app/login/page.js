@@ -5,10 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
+import { useSession, signIn, signOut } from 'next-auth/react';
+
 export const metadata = {
   title: 'Login Page',
   description: 'Tutorial on next-auth',
 };
+
+const HandleGoogleLogin = async () => {
+  signIn('github', { callbackUrl: 'http://localhost:3000' });
+};
+
 export default function Login() {
   const [show, setShow] = useState(false);
 
@@ -54,7 +61,11 @@ export default function Login() {
               </button>
             </div>
             <div className="input-button">
-              <button type="button" className={styles.button_custom}>
+              <button
+                type="button"
+                onClick={HandleGoogleLogin}
+                className={styles.button_custom}
+              >
                 Sign in with Google{' '}
                 <Image src={'/assets/google.svg'} width={20} height={20} />
               </button>

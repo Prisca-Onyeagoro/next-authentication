@@ -4,12 +4,13 @@ import styles from '@/styles/form.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
+import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from 'react-icons/hi';
 export const metadata = {
   title: 'Register Page',
   description: 'Tutorial on next-auth',
 };
 export default function Register() {
+  const [show, setShow] = useState({ password: false, cpassword: false });
   return (
     <Layouts>
       <section className="w-3/4 mx-auto  flex flex-col gap-10">
@@ -28,7 +29,7 @@ export default function Register() {
               className={styles.input_text}
             />
             <span className="icon flex items-center px-4">
-              <HiAtSymbol size={25} />
+              <HiOutlineUser size={25} />
             </span>
           </div>
           <div className={styles.input_group}>
@@ -44,38 +45,45 @@ export default function Register() {
           </div>
           <div className={styles.input_group}>
             <input
-              type="password"
+              type={`${show.password ? 'text' : 'password'}`}
               name="password"
               placeholder="password"
               className={styles.input_text}
             />
             <span
               className="icon flex items-center px-4"
-              onClick={() => setShow(!show)}
+              onClick={() => setShow({ ...show, password: !show.password })}
             >
               <HiFingerPrint size={25} />
             </span>
           </div>
           <div className={styles.input_group}>
             <input
-              type="cpassword"
-              name="confirm password"
-              placeholder="password"
+              type={`${show.cpassword ? 'text' : 'password'}`}
+              name="cpassword"
+              placeholder="confirm password"
               className={styles.input_text}
             />
             <span
               className="icon flex items-center px-4"
-              onClick={() => setShow(!show)}
+              onClick={() => setShow({ ...show, cpassword: !show.cpassword })}
             >
               <HiFingerPrint size={25} />
             </span>
           </div>
           <div className="input-button">
             <button type="submit" className={styles.button}>
-              Login
+              Register
             </button>
           </div>
         </form>
+        {/* Move to login page */}
+        <p className="text-center text-gray-400">
+          Have an account ?{' '}
+          <Link href="/login" className="text-blue-700">
+            Sign in
+          </Link>
+        </p>
       </section>
     </Layouts>
   );
